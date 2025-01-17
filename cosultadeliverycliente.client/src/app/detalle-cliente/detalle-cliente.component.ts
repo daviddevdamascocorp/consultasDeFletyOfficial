@@ -32,7 +32,7 @@ export class DetalleClienteComponent implements OnInit {
   statusFletes: StatusFlete[] = [
     {value: 'En curso', viewValue: 'En curso'},
     {value: 'Entregado', viewValue: 'Entregado'},
-    {value: 'EntregaDamasco', viewValue: 'EntregaDamasco'},
+    {value: 'Flota Damasco', viewValue: 'Flota Damasco'},
     {value: 'Cancelado', viewValue: 'Cancelado'},
   ];
   constructor(private dashboardService:DashboardService,  @Inject(MAT_DIALOG_DATA) public data: DialogData,) {
@@ -57,12 +57,12 @@ export class DetalleClienteComponent implements OnInit {
     myDate: new FormControl(this.today, Validators.required),
   });
   ActualizarCliente(ev: MatSelectChange,factura:string){
-  
+  console.log(this.today)
    // this.bodyUpdate.fechaActualizacion = 
    console.log(ev)
     let data ={
       Status:ev.value,
-      fechaActualizacion:this.stuatusForm.get('myDate')?.value
+      fechaActualizacion:this.today
     }
     console.log(data)
       console.log(this.stuatusForm.value + " " + factura)

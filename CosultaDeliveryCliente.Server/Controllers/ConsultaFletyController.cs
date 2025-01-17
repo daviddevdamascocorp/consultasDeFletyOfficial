@@ -147,11 +147,13 @@ namespace CosultaDeliveryCliente.Server.Controllers
         public IActionResult PatchStatus(string factura, StatusFlety bodyStatus)
         {
             connection();
-         
+     
             _connectionKlk.Open();
+            TimeZoneInfo localTimeZone = TimeZoneInfo.Local;
+            DateTime localTime = TimeZoneInfo.ConvertTime(bodyStatus.FechaActualizacion, TimeZoneInfo.Utc, localTimeZone);
             SqlCommand actualziacionComando = new SqlCommand("UPDATE [dbo].[Flety] SET [Estatus] = @estatus,[Fecha_Actualizacion] = @fecha WHERE [Numfactura] = @numFactura", _connectionKlk);
             actualziacionComando.Parameters.AddWithValue("@estatus", bodyStatus.Status);
-            actualziacionComando.Parameters.AddWithValue("@fecha", bodyStatus.FechaActualizacion);
+            actualziacionComando.Parameters.AddWithValue("@fecha", localTime);
             actualziacionComando.Parameters.AddWithValue("@numFactura", factura);
             actualziacionComando.ExecuteNonQuery();
                  _connectionKlk.Close(); ;
