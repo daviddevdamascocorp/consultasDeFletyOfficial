@@ -25,7 +25,7 @@ export class AppComponent implements OnInit,AfterViewInit {
 
  
 
-  displayedColumns: string[] = ['numFactura', 'codCliente', 'nomCliente','status','sucursal','direccion','fechaFactura','detalle'];
+  displayedColumns: string[] = ['numFactura', 'codCliente', 'nomCliente', 'status', 'sucursal', 'direccion', 'fechaFactura', 'fechaActualizacion','detalle'];
    TablaClientes!:MatTableDataSource<ClientesFlety>
    @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator | any;
