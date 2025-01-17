@@ -32,6 +32,7 @@ export class DetalleClienteComponent implements OnInit {
   statusFletes: StatusFlete[] = [
     {value: 'En curso', viewValue: 'En curso'},
     {value: 'Entregado', viewValue: 'Entregado'},
+    {value: 'EntregaDamasco', viewValue: 'EntregaDamasco'},
     {value: 'Cancelado', viewValue: 'Cancelado'},
   ];
   constructor(private dashboardService:DashboardService,  @Inject(MAT_DIALOG_DATA) public data: DialogData,) {
