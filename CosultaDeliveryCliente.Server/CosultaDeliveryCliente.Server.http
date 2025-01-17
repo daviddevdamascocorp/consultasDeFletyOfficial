@@ -1,0 +1,6 @@
+@CosultaDeliveryCliente.Server_HostAddress = http://localhost:5230
+
+GET {{CosultaDeliveryCliente.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
