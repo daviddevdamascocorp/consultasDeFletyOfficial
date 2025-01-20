@@ -45,7 +45,7 @@
                  Actualizar envío
              
               </mat-label>
-              <mat-select formControlName="InfoEscolta" [errorStateMatcher]="matcher" (selectionChange)="ActualizarCliente($event,detalleCliente.numFactura)">
+              <mat-select  [errorStateMatcher]="matcher" (selectionChange)="ActualizarCliente($event,detalleCliente.numFactura)">
                   <mat-option *ngFor="let statusFlete of statusFletes" [value]="statusFlete.viewValue">{{statusFlete.viewValue}}</mat-option>
           </mat-select>
               

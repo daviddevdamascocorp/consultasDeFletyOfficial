@@ -5,6 +5,7 @@ import { ClientesFlety } from './clientes.interface';
 import { DetalleCliente } from './detalle-cliente.interface';
 import { Observable } from 'rxjs';
 import { StatusActualizacion } from './actualizar-estatus.interface';
+import { DamascoTiendas } from './tiendas.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +24,46 @@ export class DashboardService {
 
   updateStatus(bodyStatus:any,factura:string):Observable<any>{
     return this.httpClient.patch<any>(`${this.baseUrl}/api/consultaflety/factura/${factura}`,bodyStatus)
+  }
+
+  getTiendasDamasco(){
+    return this.httpClient.get<DamascoTiendas[]>(`${this.baseUrl}/api/consultaflety/tiendas`)
+  }
+  getClientesTiendaFecha(startDate?: Date, endDate?: Date,  store?: string){
+    let params: any = {};
+    
+    if (startDate) params.startDate = startDate.toISOString();
+    if (endDate) params.endDate = endDate.toISOString();
+   
+    if (store) params.store = store;
+    return this.httpClient.get<ClientesFlety[]>(`${this.baseUrl}/api/consultaflety/tiendafecha`,{params})
+  }
+  getClientesStatusFecha(startDate?: Date, endDate?: Date, status?: string){
+    let params: any = {};
+    
+    if (startDate) params.startDate = startDate.toISOString();
+    if (endDate) params.endDate = endDate.toISOString();
+    if (status) params.status = status;
+   
+    return this.httpClient.get<ClientesFlety[]>(`${this.baseUrl}/api/consultaflety/statusfecha`,{params})
+  }
+
+  getClientesFecha(startDate?: Date, endDate?: Date){
+    let params: any = {};
+    
+    if (startDate) params.startDate = startDate.toISOString();
+    if (endDate) params.endDate = endDate.toISOString();
+ 
+    return this.httpClient.get<ClientesFlety[]>(`${this.baseUrl}/api/consultaflety/clientesfecha`,{params})
+  }
+
+  getClientesStatusTiendaFecha(startDate?: Date, endDate?: Date, status?: string, store?: string){
+    let params: any = {};
+    
+    if (startDate) params.startDate = startDate.toISOString();
+    if (endDate) params.endDate = endDate.toISOString();
+    if (status) params.status = status;
+    if (store) params.store = store;
+    return this.httpClient.get<ClientesFlety[]>(`${this.baseUrl}/api/consultaflety/statustiendafecha`,{params})
   }
 }

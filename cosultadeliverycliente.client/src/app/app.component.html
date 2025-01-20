@@ -1,60 +1,114 @@
-<div class="container mt-2 p-2">
+<div class="flex flex-column p-3">
+
+ 
+
+<div class="mat-elevation-z8">
+  <h2>Monitoreo de envíos</h2>
+  <form [formGroup]="recordForm" (ngSubmit)="filterRecords()">
+  <div class="flex flex-row justify-content-center gap-4 mt-4">
     <mat-form-field>
-        <mat-label>Buscar</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Nombre" #input>
+      <mat-label>Buscar</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Buscar" #input>
     </mat-form-field>
-    <div class="mat-elevation-z8">
-        <div class="contenedor-tabla">
-          <table mat-table [dataSource]="TablaClientes" matSort matSortActive="created" matSortDisableClear matSortDirection="desc">
-            <ng-container matColumnDef="numFactura">
-              <th mat-header-cell *matHeaderCellDef>Nro Factura</th>
-              <td mat-cell *matCellDef="let element">{{element.numFactura}}</td>
-            </ng-container>
-            <ng-container matColumnDef="codCliente">
-              <th mat-header-cell *matHeaderCellDef>Cédula cliente</th>
-              <td mat-cell *matCellDef="let element">{{element.codCliente}}</td>
-            </ng-container>
-            <ng-container matColumnDef="nomCliente">
-              <th mat-header-cell *matHeaderCellDef>Cliente</th>
-              <td mat-cell *matCellDef="let element">{{element.nomCliente}}</td>
-            </ng-container>
+    <mat-form-field >
 
-            <ng-container matColumnDef="sucursal">
-              <th mat-header-cell *matHeaderCellDef>Sucursal</th>
-              <td mat-cell *matCellDef="let element">{{element.sucursal}}</td>
-            </ng-container>
-            <ng-container matColumnDef="direccion">
-              <th mat-header-cell *matHeaderCellDef>Dirección</th>
-              <td mat-cell *matCellDef="let element">{{element.direccion}}</td>
-            </ng-container>
-            <ng-container matColumnDef="fechaFactura">
-              <th mat-header-cell *matHeaderCellDef>Fecha venta</th>
-              <td mat-cell *matCellDef="let element">{{element.fechaFactura  | date: 'dd/MM/yyyy'}}</td>
-            </ng-container>
-            <ng-container matColumnDef="fechaActualizacion">
-              <th mat-header-cell *matHeaderCellDef>Fecha actualización</th>
-              <td mat-cell *matCellDef="let element">{{element.fechaActualizacion  | date: 'dd/MM/yyyy hh:mm a'}}</td>
-            </ng-container>
-            <ng-container matColumnDef="status">
-              <th mat-header-cell *matHeaderCellDef>Estatus</th>
-              <td mat-cell *matCellDef="let element">{{element.status}}</td>
-            </ng-container>
-
-            <ng-container matColumnDef="detalle">
-              <th mat-header-cell *matHeaderCellDef>Detalles</th>
-              <td mat-cell *matCellDef="let element">
-                <button mat-raised-button color="accent" (click)="detalleDialogo(element.numFactura,element.idSucursal)">Detalle</button>
-              </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-
-            <tr class="mat-row" *matNoDataRow>
-              <td class="mat-cell" colspan="4">No hay datos que coincidan con "{{input.value}}"</td>
-            </tr>
-
-          </table>
-        </div>
+      <mat-label>
+        Estatus
+    
+     </mat-label>
+     <mat-select [errorStateMatcher]="matcher" formControlName="status">
+         <mat-option *ngFor="let statusFlete of statusFletes" [value]="statusFlete.viewValue">{{statusFlete.viewValue}}</mat-option>
+  </mat-select>
+    </mat-form-field>
+    <mat-form-field >
+      <mat-label>Tienda</mat-label>
+      <mat-select formControlName="" [errorStateMatcher]="matcher" formControlName="store">
+        <mat-option *ngFor="let damascoTienda of damascoTiendas" [value]="damascoTienda.idSucursal">{{damascoTienda.sucursal | uppercase}}</mat-option>
+ </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>
+        Fecha desde:
+     </mat-label>
+     <input matInput [matDatepicker]="picker"  formControlName="startDate">
+         <mat-hint>DD/MM/YYYY</mat-hint>
+         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+         <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>
+        Fecha hasta:
+     </mat-label>
+     <input matInput [matDatepicker]="pickerHasta"  formControlName="endDate">
+         <mat-hint>DD/MM/YYYY</mat-hint>
+         <mat-datepicker-toggle matIconSuffix [for]="pickerHasta"></mat-datepicker-toggle>
+         <mat-datepicker #pickerHasta></mat-datepicker>
+    </mat-form-field>
+    <div>
+      <button mat-mini-fab type="submit">
+        <mat-icon>filter_list</mat-icon>
+      </button>
     </div>
+    
+   </div>
+   
+   
+  </form>
+  
+  <div class="contenedor-tabla">
+    <table mat-table [dataSource]="TablaClientes" matSort matSortActive="created" matSortDisableClear matSortDirection="desc">
+      <ng-container matColumnDef="numFactura">
+        <th mat-header-cell *matHeaderCellDef>Nro Factura</th>
+        <td mat-cell *matCellDef="let element">{{element.numFactura}}</td>
+      </ng-container>
+      <ng-container matColumnDef="codCliente">
+        <th mat-header-cell *matHeaderCellDef>Cédula cliente</th>
+        <td mat-cell *matCellDef="let element">{{element.codCliente}}</td>
+      </ng-container>
+      <ng-container matColumnDef="nomCliente">
+        <th mat-header-cell *matHeaderCellDef>Cliente</th>
+        <td mat-cell *matCellDef="let element">{{element.nomCliente}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="sucursal">
+        <th mat-header-cell *matHeaderCellDef>Sucursal</th>
+        <td mat-cell *matCellDef="let element">{{element.sucursal}}</td>
+      </ng-container>
+      <ng-container matColumnDef="direccion">
+        <th mat-header-cell *matHeaderCellDef>Dirección</th>
+        <td mat-cell *matCellDef="let element">{{element.direccion}}</td>
+      </ng-container>
+      <ng-container matColumnDef="fechaFactura">
+        <th mat-header-cell *matHeaderCellDef>Fecha venta</th>
+        <td mat-cell *matCellDef="let element">{{element.fechaFactura  | date: 'dd/MM/yyyy'}}</td>
+      </ng-container>
+      <ng-container matColumnDef="fechaActualizacion">
+        <th mat-header-cell *matHeaderCellDef>Fecha actualización</th>
+        <td mat-cell *matCellDef="let element">{{element.fechaActualizacion  | date: 'dd/MM/yyyy hh:mm a'}}</td>
+      </ng-container>
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Estatus</th>
+        <td mat-cell *matCellDef="let element">{{element.status}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="detalle">
+        <th mat-header-cell *matHeaderCellDef>Detalles</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-raised-button color="accent" (click)="detalleDialogo(element.numFactura,element.idSucursal)">Detalle</button>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">No hay datos que coincidan con "{{input.value}}"</td>
+      </tr>
+
+    </table>
+    <mat-paginator [pageSizeOptions]="[10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+  </div>
+</div>
+
+
 </div>

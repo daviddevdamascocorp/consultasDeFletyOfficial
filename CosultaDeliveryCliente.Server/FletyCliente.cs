@@ -48,4 +48,11 @@ namespace CosultaDeliveryCliente.Server
 
         public DateTime FechaActualizacion { get; set; }
     }
+
+    public class TiendasDamasco
+    {
+        public string Sucursal { set; get; }
+        public string IdSucursal { set; get; }
+
+    }
 }

@@ -12,3 +12,11 @@ th, td {
 table {
     margin: 0 auto;
 }
+
+.contenedor-tabla {
+    position: relative;
+    min-height: 400px;
+    max-height: 800px;
+    overflow: auto;
+  }
+  

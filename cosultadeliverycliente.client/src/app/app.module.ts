@@ -11,16 +11,25 @@ import { MaterialModule } from './material/material.module';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { DetalleClienteComponent } from './detalle-cliente/detalle-cliente.component';
+import { DeliveryPendienteComponent } from './delivery-pendiente/delivery-pendiente.component';
+import { DeliveryEntregadoComponent } from './delivery-entregado/delivery-entregado.component';
+import { DeliveryDamascoComponent } from './delivery-damasco/delivery-damasco.component';
+import { DeliveryCanceladoComponent } from './delivery-cancelado/delivery-cancelado.component';
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
     DetalleClienteComponent,
+    DeliveryPendienteComponent,
+    DeliveryEntregadoComponent,
+    DeliveryDamascoComponent,
+    DeliveryCanceladoComponent,
   
   ],
   imports: [
     BrowserModule, HttpClientModule,
     AppRoutingModule, MatSlideToggleModule,MaterialModule,
-    MatTableModule,MatFormFieldModule,  MatInputModule
+    MatTableModule,MatFormFieldModule,  MatInputModule,ReactiveFormsModule
 
   ],
   providers: [
