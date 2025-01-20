@@ -25,7 +25,7 @@ interface WeatherForecast {
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit,AfterViewInit {
-  public forecasts: WeatherForecast[] = [];
+
 
  
 

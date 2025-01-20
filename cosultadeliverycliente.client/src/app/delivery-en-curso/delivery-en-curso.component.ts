@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -6,18 +7,17 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ClientesFlety } from '../clientes.interface';
 import { DashboardService } from '../dashboard.service';
 import { DetalleClienteComponent } from '../detalle-cliente/detalle-cliente.component';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MyErrorStateMatcher } from '../matcher';
 import { StatusFlete } from '../status-etapas.interface';
 import { DamascoTiendas } from '../tiendas.interface';
-import { EntregadoService } from '../entregado/entregado.service';
+import { EnCursoService } from '../encurso/en-curso.service';
 
 @Component({
-  selector: 'app-delivery-entregado',
-  templateUrl: './delivery-entregado.component.html',
-  styleUrl: './delivery-entregado.component.css'
+  selector: 'app-delivery-en-curso',
+  templateUrl: './delivery-en-curso.component.html',
+  styleUrl: './delivery-en-curso.component.css'
 })
-export class DeliveryEntregadoComponent implements OnInit,AfterViewInit {
+export class DeliveryEnCursoComponent implements OnInit,AfterViewInit {
 
 
  
@@ -37,22 +37,24 @@ export class DeliveryEntregadoComponent implements OnInit,AfterViewInit {
      {value: 'Cancelado', viewValue: 'Cancelado'},
    ];
 
- 
+   cleanForm(){
+    this.recordForm.reset()
+   }
    /**
     *
     */
-   constructor(private dashboardService:DashboardService,public dialog: MatDialog,
-    private formBuilder: FormBuilder,private entregadoService:EntregadoService) {
+   constructor(private dashboardService:DashboardService,private encursoService:EnCursoService,
+    public dialog: MatDialog,private formBuilder: FormBuilder) {
     this.recordForm = this.formBuilder.group({
-      startDate: [''],
-      endDate: [''],
+      startDate: ['',Validators.required],
+      endDate: ['',Validators.required],
       status: [''],
       store: [''],
     });
      
    }
    ngAfterViewInit(): void {
-     this.entregadoService.getEntregadoDamasco().subscribe(results=>{
+     this.encursoService.getEnCurso().subscribe(results=>{
       console.log(results)
          this.TablaClientes = new MatTableDataSource(results)
          this.TablaClientes.paginator = this.paginator;
@@ -60,14 +62,9 @@ export class DeliveryEntregadoComponent implements OnInit,AfterViewInit {
      })
    }
    ngOnInit(): void {
-     this.entregadoService.getEntregadoDamasco().subscribe(results=>{
+     this.dashboardService.getTiendasDamasco().subscribe(results=>{
       this.damascoTiendas = results
      })
-   }
-
-   
-   cleanForm(){
-    this.recordForm.reset()
    }
 
    detalleDialogo(facutra:string,sucursal:string):void{
@@ -97,7 +94,7 @@ export class DeliveryEntregadoComponent implements OnInit,AfterViewInit {
     };
     
     if(store){
-      this.entregadoService.getTiendaEntregado( store ).subscribe(results=>{
+      this.encursoService.getEnCursoTienda( store ).subscribe(results=>{
         console.log(results)
            this.TablaClientes = new MatTableDataSource(results)
            this.TablaClientes.paginator = this.paginator;
@@ -105,7 +102,7 @@ export class DeliveryEntregadoComponent implements OnInit,AfterViewInit {
        })
     }
     else if (store & filters.endDate & filters.startDate) {
-      this.entregadoService.getTiendaEntregadoFecha( store, filters.startDate, filters.endDate ).subscribe(results=>{
+      this.encursoService.getClientesEnCursoTiendaFecha( store, filters.startDate, filters.endDate ).subscribe(results=>{
         console.log(results)
            this.TablaClientes = new MatTableDataSource(results)
            this.TablaClientes.paginator = this.paginator;
@@ -113,14 +110,14 @@ export class DeliveryEntregadoComponent implements OnInit,AfterViewInit {
        })
     
     }else if (filters.endDate & filters.startDate){
-      this.entregadoService.getTiendaEntregadoFecha( startDate, endDate).subscribe(results=>{
+      this.encursoService.getEnCursoPorFecha( startDate, endDate).subscribe(results=>{
         console.log(results)
            this.TablaClientes = new MatTableDataSource(results)
            this.TablaClientes.paginator = this.paginator;
            this.TablaClientes.sort = this.sort;
        })
     }else{
-      this.entregadoService.getEntregadoDamasco().subscribe(results=>{
+      this.encursoService.getEnCurso().subscribe(results=>{
         console.log(results)
            this.TablaClientes = new MatTableDataSource(results)
            this.TablaClientes.paginator = this.paginator;
@@ -129,5 +126,5 @@ export class DeliveryEntregadoComponent implements OnInit,AfterViewInit {
     
   
    }
-   }
+  }
 }
