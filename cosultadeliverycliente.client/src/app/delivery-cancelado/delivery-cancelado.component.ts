@@ -10,6 +10,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MyErrorStateMatcher } from '../matcher';
 import { StatusFlete } from '../status-etapas.interface';
 import { DamascoTiendas } from '../tiendas.interface';
+import { CanceladoService } from '../cancelado/cancelado.service';
 
 @Component({
   selector: 'app-delivery-cancelado',
@@ -35,12 +36,16 @@ export class DeliveryCanceladoComponent implements OnInit,AfterViewInit {
      {value: 'Flota Damasco', viewValue: 'Flota Damasco'},
      {value: 'Cancelado', viewValue: 'Cancelado'},
    ];
+   cleanForm(){
+    this.recordForm.reset()
+   }
 
  
    /**
     *
     */
-   constructor(private dashboardService:DashboardService,public dialog: MatDialog,private formBuilder: FormBuilder) {
+   constructor(private dashboardService:DashboardService,public dialog: MatDialog,
+    private formBuilder: FormBuilder,private canceladoService:CanceladoService) {
     this.recordForm = this.formBuilder.group({
       startDate: ['',Validators.required],
       endDate: ['',Validators.required],
@@ -50,7 +55,7 @@ export class DeliveryCanceladoComponent implements OnInit,AfterViewInit {
      
    }
    ngAfterViewInit(): void {
-     this.dashboardService.getClientesFlety().subscribe(results=>{
+    this.canceladoService.getCanceladoDamasco().subscribe(results=>{
       console.log(results)
          this.TablaClientes = new MatTableDataSource(results)
          this.TablaClientes.paginator = this.paginator;
@@ -89,38 +94,39 @@ export class DeliveryCanceladoComponent implements OnInit,AfterViewInit {
       endDate: endDate
     };
     
-    if (status && store) {
-      this.dashboardService.getClientesStatusTiendaFecha( startDate, endDate, status, store ).subscribe(results=>{
+    if(store){
+      this.canceladoService.getClientesCanceladoTienda( store ).subscribe(results=>{
         console.log(results)
            this.TablaClientes = new MatTableDataSource(results)
            this.TablaClientes.paginator = this.paginator;
            this.TablaClientes.sort = this.sort;
        })
     }
-    else if (store) {
-      this.dashboardService.getClientesTiendaFecha( startDate, endDate,  store ).subscribe(results=>{
+    else if (store & filters.endDate & filters.startDate) {
+      this.canceladoService.getClientesFlotaDamascoTiendaFecha( store, filters.startDate, filters.endDate ).subscribe(results=>{
         console.log(results)
            this.TablaClientes = new MatTableDataSource(results)
            this.TablaClientes.paginator = this.paginator;
            this.TablaClientes.sort = this.sort;
        })
     
-    } else if (status){
-      this.dashboardService.getClientesStatusFecha( startDate, endDate, status).subscribe(results=>{
+    }else if (filters.endDate & filters.startDate){
+      this.canceladoService.getClientesFlotaDamascoFecha( startDate, endDate).subscribe(results=>{
         console.log(results)
            this.TablaClientes = new MatTableDataSource(results)
            this.TablaClientes.paginator = this.paginator;
            this.TablaClientes.sort = this.sort;
        })
-    
     }else{
-      this.dashboardService.getClientesFecha( startDate, endDate).subscribe(results=>{
+      this.canceladoService.getCanceladoDamasco().subscribe(results=>{
         console.log(results)
            this.TablaClientes = new MatTableDataSource(results)
            this.TablaClientes.paginator = this.paginator;
            this.TablaClientes.sort = this.sort;
        })
-    }
+    
+  
+   }
    /* this.dashboardService.getClientesStatusTiendaFecha( startDate, endDate, status, store ).subscribe(results=>{
       console.log(results)
          this.TablaClientes = new MatTableDataSource(results)

@@ -1,21 +1,12 @@
 <div >
-  <h2>Monitoreo de envíos</h2>
-  <form [formGroup]="recordForm" (ngSubmit)="filterRecords()">
+
+  <form [formGroup]="recordForm" >
   <div class="flex flex-row justify-content-center gap-4 mt-4">
     <mat-form-field>
       <mat-label>Buscar</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Buscar" #input>
     </mat-form-field>
-    <mat-form-field >
-
-      <mat-label>
-        Estatus
-    
-     </mat-label>
-     <mat-select [errorStateMatcher]="matcher" formControlName="status">
-         <mat-option *ngFor="let statusFlete of statusFletes" [value]="statusFlete.viewValue">{{statusFlete.viewValue}}</mat-option>
-  </mat-select>
-    </mat-form-field>
+   
     <mat-form-field >
       <mat-label>Tienda</mat-label>
       <mat-select formControlName="" [errorStateMatcher]="matcher" formControlName="store">
@@ -41,10 +32,16 @@
          <mat-datepicker #pickerHasta></mat-datepicker>
     </mat-form-field>
     <div>
-      <button mat-mini-fab type="submit" >
+      <button mat-mini-fab type="submit" (ngSubmit)="filterRecords()">
         <mat-icon>filter_list</mat-icon>
       </button>
     </div>
+    <div>
+      <button mat-mini-fab (click)="cleanForm()" color="primary">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </div>
+    
     
    </div>
    

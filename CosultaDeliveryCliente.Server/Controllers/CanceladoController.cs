@@ -109,7 +109,7 @@ namespace CosultaDeliveryCliente.Server.Controllers
             return fletyClientes;
         }
 
-        [HttpGet("flotastatustiendafecha")]
+        [HttpGet("canceladostatustiendafecha")]
         public IEnumerable<ListadoFletyCliente> GetFechaStatusTiendas(string store, DateTime startDate, DateTime endDate)
         {
             connection();
@@ -154,7 +154,7 @@ namespace CosultaDeliveryCliente.Server.Controllers
             return fletyClientes;
         }
 
-        [HttpGet("flotadamascofecha")]
+        [HttpGet("canceladodamascofecha")]
         public IEnumerable<ListadoFletyCliente> GetFechaClientes(DateTime startDate, DateTime endDate)
         {
             connection();
