@@ -32,6 +32,7 @@ export class DetalleClienteComponent implements OnInit {
   statusFletes: StatusFlete[] = [
     {value: 'En curso', viewValue: 'En curso'},
     {value: 'Entregado', viewValue: 'Entregado'},
+    {value: 'Entregado Damasco', viewValue: 'Entregado Damasco'},
     {value: 'Flota Damasco', viewValue: 'Flota Damasco'},
     {value: 'Cancelado', viewValue: 'Cancelado'},
   ];

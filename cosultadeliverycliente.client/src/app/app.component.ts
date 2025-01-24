@@ -11,6 +11,7 @@ import { StatusFlete } from './status-etapas.interface';
 import { MyErrorStateMatcher } from './matcher';
 import { DamascoTiendas } from './tiendas.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { saveAs } from 'file-saver';
 
 interface WeatherForecast {
   date: string;
@@ -135,6 +136,18 @@ export class AppComponent implements OnInit,AfterViewInit {
          this.TablaClientes.paginator = this.paginator;
          this.TablaClientes.sort = this.sort;
      })*/
+   }
+
+   generarCsv(){
+    this.dashboardService.getTiendasDamasco().subscribe(results=>{
+      this.damascoTiendas = results
+      const data: Blob = new Blob([results.toString()], {
+        type: "text/csv;charset=utf-8"
+      });
+      // you may improve this code to customize the name 
+      // of the export based on date or some other factors
+    saveAs(data, "products.csv");
+     })
    }
 
   title = 'cosultadeliverycliente.client';

@@ -17,6 +17,8 @@ import { DeliveryDamascoComponent } from './delivery-damasco/delivery-damasco.co
 import { DeliveryCanceladoComponent } from './delivery-cancelado/delivery-cancelado.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DeliveryEnCursoComponent } from './delivery-en-curso/delivery-en-curso.component';
+import { DeliveryEntregadoDamascoComponent } from './delivery-entregado-damasco/delivery-entregado-damasco.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,6 +28,7 @@ import { DeliveryEnCursoComponent } from './delivery-en-curso/delivery-en-curso.
     DeliveryDamascoComponent,
     DeliveryCanceladoComponent,
     DeliveryEnCursoComponent,
+    DeliveryEntregadoDamascoComponent
   
   ],
   imports: [
