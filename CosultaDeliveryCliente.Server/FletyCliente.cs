@@ -32,6 +32,8 @@ namespace CosultaDeliveryCliente.Server
         public DateTime? FechaActualizacion { get; set; }
         public string Direccion { get; set; }
 
+        public string? Tienda { get; set; }
+
     }
 
     public class Articulos
@@ -44,8 +46,8 @@ namespace CosultaDeliveryCliente.Server
 
     public class StatusFlety {
         public string Status { get; set; }
-       
 
+        public string Tienda { get; set; }
         public DateTime FechaActualizacion { get; set; }
     }
 

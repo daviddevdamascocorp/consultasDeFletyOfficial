@@ -8,5 +8,6 @@ export interface ClientesFlety {
     fechaFactura:       Date;
     fechaActualizacion: Date;
     direccion:          string;
+    tiendaFlety:string;
 }
 

@@ -79,8 +79,8 @@ namespace CosultaDeliveryCliente.Server.Controllers
             //cabcera del cliente
 
             SqlCommand facturaHeaderCommand = new SqlCommand("select fa.NumFactura as NumFactura,fa.CodCliente as CodCliente," +
-                "fa.NomCliente as NomCliente," +
-                "fa.Telefono as Telefono,fe.Estatus as Estatus,fa.Sucursal as Sucursal,fa.Direccion as Direccion,fa.FechaFactura as FechaFac,fe.Fecha_Actualizacion as FechaActFlety from KLK_FACTURAHDR fa " +
+                "fa.NomCliente as NomCliente,fe.Tienda as TiendaFlety, " +
+                " fa.Telefono as Telefono,fe.Estatus as Estatus,fa.Sucursal as Sucursal,fa.Direccion as Direccion,fa.FechaFactura as FechaFac,fe.Fecha_Actualizacion as FechaActFlety from KLK_FACTURAHDR fa " +
                 "join flety fe on fa.NumFactura=fe.Numfactura and LEFT(fe.Tienda, 2)=fa.IDSucursal where fa.NumFactura=@numfactura and fa.IDSucursal = @IdSucursal", _connectionKlk);
 
             SqlDataAdapter adapterHeader = new SqlDataAdapter(facturaHeaderCommand);
@@ -103,7 +103,7 @@ namespace CosultaDeliveryCliente.Server.Controllers
                         fletyCliente.FechaFactura = Convert.ToDateTime(reader["FechaFac"]);
                         fletyCliente.FechaActualizacion = Convert.ToDateTime(reader["FechaActFlety"]);
                         fletyCliente.Direccion = Convert.ToString(reader["Direccion"]).Trim();
-
+                        fletyCliente.Tienda = Convert.ToString(reader["TiendaFlety"]).Trim();
                     }
                     catch (SqlException ex)
                     {
@@ -159,10 +159,11 @@ namespace CosultaDeliveryCliente.Server.Controllers
             _connectionKlk.Open();
             TimeZoneInfo localTimeZone = TimeZoneInfo.Local;
             DateTime localTime = TimeZoneInfo.ConvertTime(bodyStatus.FechaActualizacion, TimeZoneInfo.Utc, localTimeZone);
-            SqlCommand actualziacionComando = new SqlCommand("UPDATE [dbo].[Flety] SET [Estatus] = @estatus,[Fecha_Actualizacion] = @fecha WHERE [Numfactura] = @numFactura", _connectionKlk);
+            SqlCommand actualziacionComando = new SqlCommand("UPDATE [dbo].[Flety] SET [Estatus] = @estatus,[Fecha_Actualizacion] = @fecha WHERE [Numfactura] = @numFactura and [Tienda] = @tienda", _connectionKlk);
             actualziacionComando.Parameters.AddWithValue("@estatus", bodyStatus.Status);
             actualziacionComando.Parameters.AddWithValue("@fecha", localTime);
             actualziacionComando.Parameters.AddWithValue("@numFactura", factura);
+            actualziacionComando.Parameters.AddWithValue("@tienda", bodyStatus.Tienda);
             actualziacionComando.ExecuteNonQuery();
                  _connectionKlk.Close(); ;
             return StatusCode(StatusCodes.Status200OK, new { mensaje = "Ingreso Exitoso" });

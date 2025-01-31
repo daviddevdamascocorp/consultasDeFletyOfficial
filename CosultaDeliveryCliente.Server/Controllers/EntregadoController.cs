@@ -39,7 +39,7 @@ namespace CosultaDeliveryCliente.Server.Controllers
             //agregar --and li.CodArticulo ='S0000007
             SqlCommand command = new SqlCommand("SELECT fa.NumFactura as  NumFactura  ,fa.CodCliente as CodCliente,fa.NomCliente as NomCliente, fe.Estatus as Estatus," +
                 "fa.Sucursal as Sucursal,fa.Direccion as Direccion,fa.FechaFactura as FechaFactura, fe.Fecha_Actualizacion as Fecha_Actualizacion,fa.IDSucursal as IdSucursal, COUNT(*) AS TotalProductos FROM KLK_FACTURALINE li INNER JOIN flety fe ON li.NumFactura=fe.Numfactura AND LEFT(fe.Tienda, 2)=li.IDSucursal" +
-                " INNER JOIN KLK_FACTURAHDR fa ON fa.NumFactura=li.NumFactura AND fa.IDSucursal=li.IDSucursal and li.CodArticulo ='S0000007' and fe.Estatus='Entregado' " +
+                " INNER JOIN KLK_FACTURAHDR fa ON fa.NumFactura=li.NumFactura AND fa.IDSucursal=li.IDSucursal and li.CodArticulo ='S0000007' and fe.Estatus='Entregado'  " +
                 " GROUP BY fa.CodCliente, fa.NumFactura,fa.NomCliente,fa.Sucursal,fe.Estatus,fa.Direccion,fa.FechaFactura,fe.Fecha_Actualizacion,fa.IDSucursal order by fa.FechaFactura desc;", _connectionKlk);
             SqlDataAdapter adapter = new SqlDataAdapter(command);
             System.Data.DataTable dataTable = new System.Data.DataTable();

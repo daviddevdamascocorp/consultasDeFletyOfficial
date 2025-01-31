@@ -63,7 +63,8 @@ export class DetalleClienteComponent implements OnInit {
    console.log(ev)
     let data ={
       Status:ev.value,
-      fechaActualizacion:this.today
+      fechaActualizacion: this.today,
+     Tienda: this.detalleCliente.tienda
     }
     console.log(data)
       console.log(this.stuatusForm.value + " " + factura)

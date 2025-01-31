@@ -9,6 +9,7 @@ export interface DetalleCliente {
     fechaFactura:       Date;
     fechaActualizacion: Date;
     direccion:          string;
+    tienda:string;
 }
 
 export interface Articulo {
