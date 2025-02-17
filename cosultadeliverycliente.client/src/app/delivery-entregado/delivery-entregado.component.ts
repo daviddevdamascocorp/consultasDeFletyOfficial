@@ -60,7 +60,7 @@ export class DeliveryEntregadoComponent implements OnInit,AfterViewInit {
      })
    }
    ngOnInit(): void {
-     this.entregadoService.getEntregadoDamasco().subscribe(results=>{
+    this.dashboardService.getTiendasDamasco().subscribe(results=>{
       this.damascoTiendas = results
      })
    }
@@ -97,6 +97,8 @@ export class DeliveryEntregadoComponent implements OnInit,AfterViewInit {
     };
     
     if(store){
+      console.log(store);
+      
       this.entregadoService.getTiendaEntregado( store ).subscribe(results=>{
         console.log(results)
            this.TablaClientes = new MatTableDataSource(results)

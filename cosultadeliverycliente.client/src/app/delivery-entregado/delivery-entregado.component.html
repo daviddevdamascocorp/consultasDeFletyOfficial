@@ -1,6 +1,6 @@
 <div >
  
-  <form [formGroup]="recordForm" >
+  <form [formGroup]="recordForm" (ngSubmit)="filterRecords()">
   <div class="flex flex-row justify-content-center gap-4 mt-4">
     <mat-form-field>
       <mat-label>Buscar</mat-label>
